@@ -1,172 +1,321 @@
+html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speed Typing Test</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 650px;
-            text-align: center;
-        }
-        h1 { color: #333; margin-bottom: 20px; }
-        .stats-box {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            background: #eef2f3;
-            padding: 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .stat { color: #2c3e50; }
-        #text-to-type {
-            background: #f9f9f9;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            text-align: left;
-            line-height: 1.6;
-            user-select: none;
-        }
-        textarea {
-            width: 95%;
-            height: 120px;
-            font-size: 1.1rem;
-            padding: 12px;
-            border: 2px solid #3498db;
-            border-radius: 8px;
-            resize: none;
-            outline: none;
-        }
-        textarea:disabled { background: #f0f0f0; border-color: #ccc; }
-        button {
-            margin-top: 20px;
-            padding: 12px 25px;
-            font-size: 1rem;
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        button:hover { background-color: #27ae60; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typing Speed Test - Apni Typing Speed Check Karein</title>
+<meta name="description" content="Free online typing speed test. Apni typing speed (WPM) aur accuracy check karein, bilkul 10fastfingers ki tarah. Fast, simple aur mobile-friendly.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6f9;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 10px;
+  }
+  header {
+    text-align: center;
+    margin: 15px 0;
+  }
+  header h1 {
+    font-size: 1.6rem;
+    color: #2c3e50;
+  }
+  header p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+  .ad-box {
+    width: 100%;
+    max-width: 700px;
+    min-height: 90px;
+    background: #e0e0e0;
+    border: 1px dashed #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 0.9rem;
+    margin: 10px 0;
+    border-radius: 6px;
+  }
+  .container {
+    width: 100%;
+    max-width: 700px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    padding: 20px;
+    margin: 10px 0;
+  }
+  .stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+  .stat {
+    text-align: center;
+    padding: 8px 12px;
+  }
+  .stat span {
+    display: block;
+  }
+  .stat .value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2980b9;
+  }
+  .stat .label {
+    font-size: 0.8rem;
+    color: #777;
+  }
+  #word-display {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 1.2rem;
+    line-height: 2;
+    min-height: 100px;
+    margin-bottom: 15px;
+    user-select: none;
+  }
+  #word-display span {
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+  #word-display span.current {
+    background: #cce5ff;
+  }
+  #word-display span.correct {
+    color: #27ae60;
+  }
+  #word-display span.incorrect {
+    color: #e74c3c;
+    text-decoration: underline;
+  }
+  #input-box {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border: 2px solid #2980b9;
+    border-radius: 8px;
+    outline: none;
+  }
+  #input-box:disabled {
+    background: #eee;
+  }
+  .btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+  }
+  .btn:hover {
+    background: #2471a3;
+  }
+  footer {
+    margin-top: 20px;
+    color: #888;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  @media (max-width: 480px) {
+    header h1 { font-size: 1.3rem; }
+    #word-display { font-size: 1rem; }
+  }
+</style>
 </head>
 <body>
 
+<header>
+  <h1>⌨️ Typing Speed Test</h1>
+  <p>Apni typing speed check karein - WPM aur Accuracy ke saath</p>
+</header>
+
+<div class="ad-box">Ad yahan</div>
+
 <div class="container">
-    <h1>⌨️ Speed Typing Test</h1>
-    
-    <div class="stats-box">
-        <div class="stat">Time Left: <span id="timer">60</span>s</div>
-        <div class="stat">WPM: <span id="wpm">0</span></div>
-        <div class="stat">Accuracy: <span id="accuracy">100</span>%</div>
+  <div class="stats">
+    <div class="stat">
+      <span class="value" id="time-left">60</span>
+      <span class="label">Seconds</span>
     </div>
+    <div class="stat">
+      <span class="value" id="wpm">0</span>
+      <span class="label">WPM</span>
+    </div>
+    <div class="stat">
+      <span class="value" id="accuracy">100%</span>
+      <span class="label">Accuracy</span>
+    </div>
+    <div class="stat">
+      <span class="value" id="correct-chars">0</span>
+      <span class="label">Correct Chars</span>
+    </div>
+  </div>
 
-    <div id="text-to-type">Loading text...</div>
+  <div id="word-display"></div>
 
-    <textarea id="input-field" placeholder="Yahan dekh kar type karna shuru karein... Timer khud shuru ho jayega."></textarea>
-    
-    <br>
-    <button id="btn-restart">Try Again</button>
+  <input type="text" id="input-box" placeholder="Yahan type karna shuru karein..." autocomplete="off">
+
+  <button class="btn" id="restart-btn">Restart Test</button>
 </div>
 
+<div class="ad-box">Ad yahan</div>
+
+<footer>
+  Made with ❤️ | Simple Typing Speed Test
+</footer>
+
 <script>
-    const paragraphs = [
-        "The quick brown fox jumps over the lazy dog. This classic phrase contains every single letter in the English alphabet.",
-        "Success is not final, failure is not fatal: it is the courage to continue that counts in the journey of life.",
-        "Technology is advancing at a rapid pace. Learning how to code opens up endless possibilities for the future generation.",
-        "Consistency is the key to mastering any skill. The more you practice typing every day, the faster and more accurate you will become."
-    ];
+  const wordList = ["the","of","to","and","a","in","is","it","you","that",
+  "he","was","for","on","are","with","as","I","his","they",
+  "be","at","one","have","this","from","or","had","by","word",
+  "but","not","what","all","were","we","when","your","can","said",
+  "there","use","an","each","which","she","do","how","their","if",
+  "will","up","other","about","out","many","then","them","these","so",
+  "some","her","would","make","like","him","into","time","has","look",
+  "two","more","write","go","see","number","no","way","could","people",
+  "my","than","first","water","been","call","who","oil","its","now",
+  "find","long","down","day","did","get","come","made","may","part"];
 
-    const textDisplay = document.getElementById("text-to-type");
-    const inputField = document.getElementById("input-field");
-    const timerDisplay = document.getElementById("timer");
-    const wpmDisplay = document.getElementById("wpm");
-    const accuracyDisplay = document.getElementById("accuracy");
-    const restartBtn = document.getElementById("btn-restart");
+  let words = [];
+  let currentWordIndex = 0;
+  let typedCorrect = 0;
+  let typedTotal = 0;
+  let timer = null;
+  let timeLeft = 60;
+  let started = false;
 
-    let timer = 60;
-    let maxTime = 60;
-    let timerInterval = null;
-    let isTyping = false;
+  const wordDisplay = document.getElementById('word-display');
+  const inputBox = document.getElementById('input-box');
+  const timeLeftEl = document.getElementById('time-left');
+  const wpmEl = document.getElementById('wpm');
+  const accuracyEl = document.getElementById('accuracy');
+  const correctCharsEl = document.getElementById('correct-chars');
+  const restartBtn = document.getElementById('restart-btn');
 
-    function loadParagraph() {
-        const randomIndex = Math.floor(Math.random() * paragraphs.length);
-        textDisplay.innerHTML = paragraphs[randomIndex];
-        inputField.value = "";
-        clearInterval(timerInterval);
-        timer = maxTime;
-        timerDisplay.innerText = timer;
-        wpmDisplay.innerText = 0;
-        accuracyDisplay.innerText = 100;
-        isTyping = false;
-        inputField.disabled = false;
-        inputField.focus();
+  function generateWords(count) {
+    let arr = [];
+    for (let i = 0; i < count; i++) {
+      arr.push(wordList[Math.floor(Math.random() * wordList.length)]);
+    }
+    return arr;
+  }
+
+  function renderWords() {
+    wordDisplay.innerHTML = words.map((w, i) => {
+      let cls = '';
+      if (i === currentWordIndex) cls = 'current';
+      return `<span class="${cls}" data-index="${i}">${w}</span>`;
+    }).join(' ');
+  }
+
+  function resetTest() {
+    words = generateWords(100);
+    currentWordIndex = 0;
+    typedCorrect = 0;
+    typedTotal = 0;
+    timeLeft = 60;
+    started = false;
+    clearInterval(timer);
+    timeLeftEl.textContent = timeLeft;
+    wpmEl.textContent = 0;
+    accuracyEl.textContent = '100%';
+    correctCharsEl.textContent = 0;
+    inputBox.disabled = false;
+    inputBox.value = '';
+    renderWords();
+    inputBox.focus();
+  }
+
+  function startTimer() {
+    timer = setInterval(() => {
+      timeLeft--;
+      timeLeftEl.textContent = timeLeft;
+      updateStats();
+      if (timeLeft <= 0) {
+        endTest();
+      }
+    }, 1000);
+  }
+
+  function updateStats() {
+    const timeElapsed = 60 - timeLeft;
+    const minutes = timeElapsed / 60 || 1/60;
+    const wpm = Math.round((typedCorrect / 5) / minutes);
+    wpmEl.textContent = wpm > 0 ? wpm : 0;
+    const accuracy = typedTotal > 0 ? Math.round((typedCorrect / typedTotal) * 100) : 100;
+    accuracyEl.textContent = accuracy + '%';
+    correctCharsEl.textContent = typedCorrect;
+  }
+
+  function endTest() {
+    clearInterval(timer);
+    inputBox.disabled = true;
+    updateStats();
+  }
+
+  inputBox.addEventListener('input', (e) => {
+    if (!started) {
+      started = true;
+      startTimer();
     }
 
-    function startTimer() {
-        if (timer > 0) {
-            timer--;
-            timerDisplay.innerText = timer;
-            
-            // WPM calculation
-            let wordsTyped = inputField.value.trim().split(/\s+/).filter(word => word.length > 0).length;
-            let timeElapsed = (maxTime - timer) / 60;
-            let wpm = Math.round(wordsTyped / timeElapsed);
-            wpmDisplay.innerText = wpm >= 0 && wpm !== Infinity ? wpm : 0;
-        } else {
-            clearInterval(timerInterval);
-            inputField.disabled = true;
-            alert("Time's up! Check your final score.");
-        }
+    const typedValue = e.target.value;
+
+    if (typedValue.endsWith(' ')) {
+      const typedWord = typedValue.trim();
+      const currentWord = words[currentWordIndex];
+      const spans = wordDisplay.querySelectorAll('span');
+
+      let correctChars = 0;
+      for (let i = 0; i < currentWord.length; i++) {
+        if (typedWord[i] === currentWord[i]) correctChars++;
+      }
+      typedCorrect += correctChars;
+      typedTotal += Math.max(typedWord.length, currentWord.length);
+
+      if (typedWord === currentWord) {
+        spans[currentWordIndex].classList.add('correct');
+      } else {
+        spans[currentWordIndex].classList.add('incorrect');
+      }
+
+      spans[currentWordIndex].classList.remove('current');
+      currentWordIndex++;
+      if (spans[currentWordIndex]) {
+        spans[currentWordIndex].classList.add('current');
+      } else {
+        words = words.concat(generateWords(50));
+        renderWords();
+        wordDisplay.querySelectorAll('span')[currentWordIndex].classList.add('current');
+      }
+
+      inputBox.value = '';
+      updateStats();
     }
+  });
 
-    inputField.addEventListener("input", () => {
-        const originalText = textDisplay.innerText;
-        const typedText = inputField.value;
+  restartBtn.addEventListener('click', resetTest);
 
-        // Start timer on first keystroke
-        if (!isTyping && typedText.length > 0) {
-            isTyping = true;
-            timerInterval = setInterval(startTimer, 1000);
-        }
-
-        // Live Accuracy calculation
-        let mistakes = 0;
-        for (let i = 0; i < typedText.length; i++) {
-            if (typedText[i] !== originalText[i]) {
-                mistakes++;
-            }
-        }
-        let accuracy = Math.round(((typedText.length - mistakes) / typedText.length) * 100);
-        accuracyDisplay.innerText = typedText.length > 0 ? (accuracy < 0 ? 0 : accuracy) : 100;
-    });
-
-    restartBtn.addEventListener("click", loadParagraph);
-
-    // Initial Load
-    window.onload = loadParagraph;
+  resetTest();
 </script>
 
 </body>
 </html>
+```
